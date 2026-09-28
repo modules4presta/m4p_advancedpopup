@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="module" source-language="en-US" target-language="pl-PL" datatype="plaintext">
+    <body>
+      <trans-unit id="24efa7ee4511563b16144f39706d594f">
+        <source>Notice</source>
+        <target>Powiadomienie</target>
+      </trans-unit>
+      <trans-unit id="d3d2e617335f08df83599665eef8a418">
+        <source>Close</source>
+        <target>Zamknij</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="module" source-language="en-US" target-language="pl-PL" datatype="plaintext">
+    <body>
+      <trans-unit id="0ec01afba9977d84169c6b480b69420e">
+        <source>Popup campaigns</source>
+        <target>Kampanie popup</target>
+      </trans-unit>
+      <trans-unit id="bbed05f3127ef3e858151a688a07ca6c">
+        <source>Runs popup campaigns on the shop: your own HTML with a call to action, shown after a delay, once per session.</source>
+        <target>Prowadzi kampanie popup w sklepie: własny HTML z przyciskiem, pokazywany po zadanym czasie, raz na sesję.</target>
+      </trans-unit>
+      <trans-unit id="b718adec73e04ce3ec720dd11a06a308">
+        <source>ID</source>
+        <target>ID</target>
+      </trans-unit>
+      <trans-unit id="9adb4e5c6804a2a51cfadb6f26b3740e">
+        <source>Campaign name</source>
+        <target>Nazwa kampanii</target>
+      </trans-unit>
+      <trans-unit id="52f5e0bc3859bc5f5e25130b6c7e8881">
+        <source>Position</source>
+        <target>Pozycja</target>
+      </trans-unit>
+      <trans-unit id="5da618e8e4b89c66fe86e32cdafde142">
+        <source>From</source>
+        <target>Od</target>
+      </trans-unit>
+      <trans-unit id="e12167aa0a7698e6ebc92b4ce3909b53">
+        <source>To</source>
+        <target>Do</target>
+      </trans-unit>
+      <trans-unit id="00d23a76e43b46dae9ec7aa9dcbebb32">
+        <source>Enabled</source>
+        <target>Aktywna</target>
+      </trans-unit>
+      <trans-unit id="d3b206d196cd6be3a2764c1fb90b200f">
+        <source>Delete selected</source>
+        <target>Usuń zaznaczone</target>
+      </trans-unit>
+      <trans-unit id="694d22b184f0a1103e6fd4714d2ae5c7">
+        <source>Delete the selected campaigns?</source>
+        <target>Usunąć zaznaczone kampanie?</target>
+      </trans-unit>
+      <trans-unit id="8c906340185851f5e4b8c6eed494aef4">
+        <source>Popup campaign</source>
+        <target>Kampania popup</target>
+      </trans-unit>
+      <trans-unit id="ae2016fe39d293043341f80926cc14a8">
+        <source>A label for the back office only; the customer never sees it.</source>
+        <target>Etykieta tylko dla panelu — klient jej nie zobaczy.</target>
+      </trans-unit>
+      <trans-unit id="93cba07454f06a4a960172bbd6e2a435">
+        <source>Yes</source>
+        <target>Tak</target>
+      </trans-unit>
+      <trans-unit id="bafd7322c6e97d25b6299b5d6fe8920b">
+        <source>No</source>
+        <target>Nie</target>
+      </trans-unit>
+      <trans-unit id="0101316665d4f82adaa26d86fbbb2d6e">
+        <source>Heading</source>
+        <target>Tytuł</target>
+      </trans-unit>
+      <trans-unit id="7237d4aac36e34b9d8a8d655c97dc5d8">
+        <source>Content (HTML)</source>
+        <target>Treść (HTML)</target>
+      </trans-unit>
+      <trans-unit id="930800441b7ceea300e3cb6f6a264b71">
+        <source>Button label</source>
+        <target>Etykieta przycisku</target>
+      </trans-unit>
+      <trans-unit id="c6fc093aeb0406b1d616cbb2f8d9e763">
+        <source>Leave empty to show no button.</source>
+        <target>Zostaw puste, żeby nie pokazywać przycisku.</target>
+      </trans-unit>
+      <trans-unit id="15fcc7ab64c322448d20454419aa93ee">
+        <source>Button link</source>
+        <target>Link przycisku</target>
+      </trans-unit>
+      <trans-unit id="d1435541799db7990dfe8e25c8dc8c46">
+        <source>For example https://your-shop.com/offers</source>
+        <target>Na przykład https://twojsklep.pl/promocje</target>
+      </trans-unit>
+      <trans-unit id="135b91672ed363451ab17b0db5609549">
+        <source>Delay before it appears</source>
+        <target>Opóźnienie przed pokazaniem</target>
+      </trans-unit>
+      <trans-unit id="783e8e29e6a8c3e22baa58a19420eb4f">
+        <source>seconds</source>
+        <target>s</target>
+      </trans-unit>
+      <trans-unit id="18a2dd75d0b987ce3bc4a614cba2acc1">
+        <source>How long after the page loads the popup is shown.</source>
+        <target>Po ilu sekundach od wczytania strony pokazać popup.</target>
+      </trans-unit>
+      <trans-unit id="9fd010ebea0f03ae3302021cc1002e1d">
+        <source>Runs from</source>
+        <target>Pokazuj od</target>
+      </trans-unit>
+      <trans-unit id="3d59ca6c6e94d6f7f442c4556526ea77">
+        <source>Leave empty for no limit.</source>
+        <target>Zostaw puste, żeby nie ograniczać.</target>
+      </trans-unit>
+      <trans-unit id="c1f91ed1e1e3d6f26971f5fbc6c14c2e">
+        <source>Runs until</source>
+        <target>Pokazuj do</target>
+      </trans-unit>
+      <trans-unit id="0af16098a593e9738c14f32173275d3b">
+        <source>Order of campaigns; a lower number wins.</source>
+        <target>Kolejność kampanii — mniejsza liczba ma pierwszeństwo.</target>
+      </trans-unit>
+      <trans-unit id="c9cc8cce247e49bae79f15173ce97354">
+        <source>Save</source>
+        <target>Zapisz</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
