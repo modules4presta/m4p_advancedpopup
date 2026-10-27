@@ -38,6 +38,13 @@ class AdminM4pPopupController extends ModuleAdminController
             'name' => [
                 'title' => $this->trans('Campaign name', [], 'Modules.M4padvancedpopup.Admin'),
             ],
+            'pages' => [
+                'title' => $this->trans('Where', [], 'Modules.M4padvancedpopup.Admin'),
+                'type' => 'select',
+                'list' => $this->getPageOptions(),
+                'filter_key' => 'a!pages',
+                'callback' => 'displayPages',
+            ],
             'position' => [
                 'title' => $this->trans('Position', [], 'Modules.M4padvancedpopup.Admin'),
                 'align' => 'center',
@@ -62,6 +69,22 @@ class AdminM4pPopupController extends ModuleAdminController
             ],
         ];
 
+        $this->fields_options = [
+            'general' => [
+                'title' => $this->trans('Settings', [], 'Modules.M4padvancedpopup.Admin'),
+                'fields' => [
+                    M4p_AdvancedPopup::CFG_MODULE_CSS => [
+                        'title' => $this->trans('Load the module stylesheet', [], 'Modules.M4padvancedpopup.Admin'),
+                        'desc' => $this->trans('Turn it off when the theme styles the popup itself.', [], 'Modules.M4padvancedpopup.Admin'),
+                        'type' => 'bool',
+                        'validation' => 'isBool',
+                        'cast' => 'intval',
+                    ],
+                ],
+                'submit' => ['title' => $this->trans('Save', [], 'Modules.M4padvancedpopup.Admin')],
+            ],
+        ];
+
         $this->bulk_actions = [
             'delete' => [
                 'text' => $this->trans('Delete selected', [], 'Modules.M4padvancedpopup.Admin'),
@@ -69,6 +92,22 @@ class AdminM4pPopupController extends ModuleAdminController
                 'icon' => 'icon-trash',
             ],
         ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function getPageOptions(): array
+    {
+        return [
+            M4pPopup::PAGES_HOME => $this->trans('Home page', [], 'Modules.M4padvancedpopup.Admin'),
+            M4pPopup::PAGES_ALL => $this->trans('Whole shop', [], 'Modules.M4padvancedpopup.Admin'),
+        ];
+    }
+
+    public function displayPages(string $value): string
+    {
+        return htmlspecialchars($this->getPageOptions()[$value] ?? $value, ENT_QUOTES);
     }
 
     public function renderList()
@@ -139,7 +178,32 @@ class AdminM4pPopupController extends ModuleAdminController
                     'name' => 'delay',
                     'class' => 'fixed-width-sm',
                     'suffix' => $this->trans('seconds', [], 'Modules.M4padvancedpopup.Admin'),
-                    'desc' => $this->trans('How long after the page loads the popup is shown.', [], 'Modules.M4padvancedpopup.Admin'),
+                    'desc' => $this->trans("Counted from the visitor's first scroll, tap or mouse move.", [], 'Modules.M4padvancedpopup.Admin'),
+                ],
+                [
+                    'type' => 'select',
+                    'label' => $this->trans('Where', [], 'Modules.M4padvancedpopup.Admin'),
+                    'name' => 'pages',
+                    'options' => [
+                        'query' => array_map(
+                            static function (string $id, string $name): array {
+                                return ['id' => $id, 'name' => $name];
+                            },
+                            array_keys($this->getPageOptions()),
+                            $this->getPageOptions()
+                        ),
+                        'id' => 'id',
+                        'name' => 'name',
+                    ],
+                    'desc' => $this->trans('The whole shop leaves out the cart, the checkout and the customer account.', [], 'Modules.M4padvancedpopup.Admin'),
+                ],
+                [
+                    'type' => 'text',
+                    'label' => $this->trans('Show again after', [], 'Modules.M4padvancedpopup.Admin'),
+                    'name' => 'repeat_days',
+                    'class' => 'fixed-width-sm',
+                    'suffix' => $this->trans('days', [], 'Modules.M4padvancedpopup.Admin'),
+                    'desc' => $this->trans('0 shows it once per browser session. Remembered in the visitor\'s browser.', [], 'Modules.M4padvancedpopup.Admin'),
                 ],
                 [
                     'type' => 'datetime',

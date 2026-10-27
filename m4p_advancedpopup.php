@@ -18,11 +18,19 @@ require_once __DIR__ . '/classes/M4pPopup.php';
 
 class M4p_AdvancedPopup extends Module
 {
+    public const CFG_MODULE_CSS = 'M4P_POPUP_MODULE_CSS';
+
+    /** Storefront pages a "whole shop" campaign runs on; cart, checkout and the account stay clear. */
+    private const SHOP_PAGES = [
+        'index', 'category', 'product', 'cms', 'manufacturer', 'supplier', 'search',
+        'best-sales', 'new-products', 'prices-drop', 'contact', 'stores', 'sitemap',
+    ];
+
     public function __construct()
     {
         $this->name = 'm4p_advancedpopup';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.0';
+        $this->version = '1.1.0';
         $this->author = 'Modules4Presta';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -36,15 +44,22 @@ class M4p_AdvancedPopup extends Module
 
     public function install(): bool
     {
+        Configuration::updateValue(self::CFG_MODULE_CSS, 1);
+
         return parent::install()
             && $this->installDb()
             && $this->installTab()
             && $this->registerHook('actionFrontControllerSetMedia')
-            && $this->registerHook('displayBeforeBodyClosingTag');
+            && $this->registerHook('displayBeforeBodyClosingTag')
+            && $this->registerHook('actionObjectM4pPopupAddAfter')
+            && $this->registerHook('actionObjectM4pPopupUpdateAfter')
+            && $this->registerHook('actionObjectM4pPopupDeleteAfter');
     }
 
     public function uninstall(): bool
     {
+        Configuration::deleteByName(self::CFG_MODULE_CSS);
+
         return $this->uninstallTab()
             && $this->uninstallDb()
             && parent::uninstall();
@@ -58,6 +73,8 @@ class M4p_AdvancedPopup extends Module
                 `name` VARCHAR(255) NOT NULL,
                 `active` TINYINT(1) UNSIGNED NOT NULL DEFAULT 1,
                 `delay` INT UNSIGNED NOT NULL DEFAULT 3,
+                `pages` VARCHAR(16) NOT NULL DEFAULT \'' . M4pPopup::PAGES_HOME . '\',
+                `repeat_days` INT UNSIGNED NOT NULL DEFAULT 0,
                 `position` INT UNSIGNED NOT NULL DEFAULT 0,
                 `date_start` DATETIME NULL DEFAULT NULL,
                 `date_end` DATETIME NULL DEFAULT NULL,
@@ -134,14 +151,16 @@ class M4p_AdvancedPopup extends Module
 
     public function hookActionFrontControllerSetMedia(): void
     {
-        if (!$this->isHomePage()) {
+        if (!$this->getCampaigns()) {
             return;
         }
 
-        $this->context->controller->registerStylesheet(
-            'm4p-advancedpopup',
-            'modules/' . $this->name . '/views/css/front.css'
-        );
+        if (Configuration::get(self::CFG_MODULE_CSS)) {
+            $this->context->controller->registerStylesheet(
+                'm4p-advancedpopup',
+                'modules/' . $this->name . '/views/css/front.css'
+            );
+        }
         $this->context->controller->registerJavascript(
             'm4p-advancedpopup',
             'modules/' . $this->name . '/views/js/front.js',
@@ -151,11 +170,7 @@ class M4p_AdvancedPopup extends Module
 
     public function hookDisplayBeforeBodyClosingTag(array $params): string
     {
-        if (!$this->isHomePage()) {
-            return '';
-        }
-
-        $popups = M4pPopup::getActive((int) $this->context->language->id);
+        $popups = $this->getCampaigns();
         if (!$popups) {
             return '';
         }
@@ -165,8 +180,45 @@ class M4p_AdvancedPopup extends Module
         return $this->display(__FILE__, 'views/templates/hook/popup.tpl');
     }
 
-    private function isHomePage(): bool
+    public function hookActionObjectM4pPopupAddAfter(): void
     {
-        return ($this->context->controller->php_self ?? '') === 'index';
+        $this->purgePageCache();
+    }
+
+    public function hookActionObjectM4pPopupUpdateAfter(): void
+    {
+        $this->purgePageCache();
+    }
+
+    public function hookActionObjectM4pPopupDeleteAfter(): void
+    {
+        $this->purgePageCache();
+    }
+
+    /**
+     * Campaigns for the current page; the result is shared by the media and the display hook.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private function getCampaigns(): array
+    {
+        static $campaigns;
+
+        if (null === $campaigns) {
+            $page = (string) ($this->context->controller->php_self ?? '');
+            $campaigns = in_array($page, self::SHOP_PAGES, true)
+                ? M4pPopup::getForPage((int) $this->context->language->id, 'index' === $page)
+                : [];
+        }
+
+        return $campaigns;
+    }
+
+    /**
+     * Campaigns are rendered into cached templates, so a saved change has to drop that cache.
+     */
+    private function purgePageCache(): void
+    {
+        Tools::clearSmartyCache();
     }
 }

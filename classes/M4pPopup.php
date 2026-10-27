@@ -16,6 +16,9 @@ if (!defined('_PS_VERSION_')) {
 
 class M4pPopup extends ObjectModel
 {
+    public const PAGES_HOME = 'home';
+    public const PAGES_ALL = 'all';
+
     /** @var int */
     public $id_m4p_popup;
 
@@ -27,6 +30,12 @@ class M4pPopup extends ObjectModel
 
     /** @var int Delay before showing the popup (seconds) */
     public $delay = 3;
+
+    /** @var string Where it runs: PAGES_HOME or PAGES_ALL */
+    public $pages = self::PAGES_HOME;
+
+    /** @var int Days before the same visitor sees it again; 0 = once per browser session */
+    public $repeat_days = 0;
 
     /** @var int */
     public $position = 0;
@@ -63,6 +72,8 @@ class M4pPopup extends ObjectModel
             'name' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'required' => true, 'size' => 255],
             'active' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
             'delay' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
+            'pages' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'size' => 16],
+            'repeat_days' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
             'position' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
             'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
             'date_upd' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
@@ -75,24 +86,36 @@ class M4pPopup extends ObjectModel
     ];
 
     /**
-     * Active campaigns within the date window, for a given language, sorted by position.
-     * NULL dates mean no limit.
+     * Enabled campaigns that have not ended, for a given language and page, sorted by position.
+     * The start date and the end date are checked again in the browser (`start`/`end` as Unix time):
+     * full-page caches keep the HTML for hours, so a campaign must be in it before it starts.
      *
      * @return array<int, array<string, mixed>>
      */
-    public static function getActive(int $idLang): array
+    public static function getForPage(int $idLang, bool $isHome): array
     {
-        $sql = 'SELECT p.`id_m4p_popup` AS id, p.`delay`, pl.`title`, pl.`content`, pl.`cta_label`, pl.`cta_url`
+        // Dates are entered in the shop's time zone, which is PHP's; MySQL's NOW() may run in another one.
+        $sql = 'SELECT p.`id_m4p_popup` AS id, p.`delay`, p.`repeat_days`,
+                p.`date_start`, p.`date_end`,
+                pl.`title`, pl.`content`, pl.`cta_label`, pl.`cta_url`
             FROM `' . _DB_PREFIX_ . 'm4p_popup` p
             INNER JOIN `' . _DB_PREFIX_ . 'm4p_popup_lang` pl
-                ON (pl.`id_m4p_popup` = p.`id_m4p_popup` AND pl.`id_lang` = ' . (int) $idLang . ')
+                ON (pl.`id_m4p_popup` = p.`id_m4p_popup` AND pl.`id_lang` = ' . $idLang . ')
             WHERE p.`active` = 1
-                AND (p.`date_start` IS NULL OR p.`date_start` <= NOW())
-                AND (p.`date_end` IS NULL OR p.`date_end` >= NOW())
+                AND (p.`date_end` IS NULL OR p.`date_end` >= \'' . pSQL(date('Y-m-d H:i:s')) . '\')
+                ' . ($isHome ? '' : 'AND p.`pages` = \'' . self::PAGES_ALL . '\'') . '
             ORDER BY p.`position` ASC, p.`id_m4p_popup` ASC';
 
         $rows = Db::getInstance()->executeS($sql);
+        if (!is_array($rows)) {
+            return [];
+        }
 
-        return is_array($rows) ? $rows : [];
+        foreach ($rows as &$row) {
+            $row['start'] = $row['date_start'] ? (int) strtotime($row['date_start']) : 0;
+            $row['end'] = $row['date_end'] ? (int) strtotime($row['date_end']) : 0;
+        }
+
+        return $rows;
     }
 }
