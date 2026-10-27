@@ -18,6 +18,10 @@
         <source>Campaign name</source>
         <target>Nazwa kampanii</target>
       </trans-unit>
+      <trans-unit id="b3c5b21d2cb47cc950fd4667edaf404c">
+        <source>Where</source>
+        <target>Gdzie</target>
+      </trans-unit>
       <trans-unit id="52f5e0bc3859bc5f5e25130b6c7e8881">
         <source>Position</source>
         <target>Pozycja</target>
@@ -34,6 +38,22 @@
         <source>Enabled</source>
         <target>Aktywna</target>
       </trans-unit>
+      <trans-unit id="f4f70727dc34561dfde1a3c529b6205c">
+        <source>Settings</source>
+        <target>Ustawienia</target>
+      </trans-unit>
+      <trans-unit id="c47746fa7da6748f28b6c3da52885908">
+        <source>Load the module stylesheet</source>
+        <target>Wczytuj style modułu</target>
+      </trans-unit>
+      <trans-unit id="cef4e020fe07ccfb600f0b10102b3bf6">
+        <source>Turn it off when the theme styles the popup itself.</source>
+        <target>Wyłącz, gdy wygląd popupu zapewnia motyw.</target>
+      </trans-unit>
+      <trans-unit id="c9cc8cce247e49bae79f15173ce97354">
+        <source>Save</source>
+        <target>Zapisz</target>
+      </trans-unit>
       <trans-unit id="d3b206d196cd6be3a2764c1fb90b200f">
         <source>Delete selected</source>
         <target>Usuń zaznaczone</target>
@@ -42,13 +62,21 @@
         <source>Delete the selected campaigns?</source>
         <target>Usunąć zaznaczone kampanie?</target>
       </trans-unit>
+      <trans-unit id="7b19b37e7fc3dfe3c3e1ad5b84c7f565">
+        <source>Home page</source>
+        <target>Strona główna</target>
+      </trans-unit>
+      <trans-unit id="53fe74a9555de30bc10f5d967f0eca7c">
+        <source>Whole shop</source>
+        <target>Cały sklep</target>
+      </trans-unit>
       <trans-unit id="8c906340185851f5e4b8c6eed494aef4">
         <source>Popup campaign</source>
         <target>Kampania popup</target>
       </trans-unit>
       <trans-unit id="ae2016fe39d293043341f80926cc14a8">
         <source>A label for the back office only; the customer never sees it.</source>
-        <target>Etykieta tylko dla panelu — klient jej nie zobaczy.</target>
+        <target>Etykieta tylko dla panelu – klient jej nie zobaczy.</target>
       </trans-unit>
       <trans-unit id="93cba07454f06a4a960172bbd6e2a435">
         <source>Yes</source>
@@ -90,9 +118,21 @@
         <source>seconds</source>
         <target>s</target>
       </trans-unit>
-      <trans-unit id="18a2dd75d0b987ce3bc4a614cba2acc1">
-        <source>How long after the page loads the popup is shown.</source>
-        <target>Po ilu sekundach od wczytania strony pokazać popup.</target>
+      <trans-unit id="72974f4073c6cb862c8f427a8e96915e">
+        <source>The whole shop leaves out the cart, the checkout and the customer account.</source>
+        <target>„Cały sklep” pomija koszyk, kasę i konto klienta.</target>
+      </trans-unit>
+      <trans-unit id="8b3368e8c572826f32156633c40d38cf">
+        <source>Show again after</source>
+        <target>Pokaż ponownie po</target>
+      </trans-unit>
+      <trans-unit id="44fdec47036f482b68b748f9d786801b">
+        <source>days</source>
+        <target>dniach</target>
+      </trans-unit>
+      <trans-unit id="50e45348d74f47d14ac6672a7152a025">
+        <source>0 shows it once per browser session. Remembered in the visitor's browser.</source>
+        <target>0 – raz na sesję przeglądarki. Zapamiętywane w przeglądarce klienta.</target>
       </trans-unit>
       <trans-unit id="9fd010ebea0f03ae3302021cc1002e1d">
         <source>Runs from</source>
@@ -108,11 +148,7 @@
       </trans-unit>
       <trans-unit id="0af16098a593e9738c14f32173275d3b">
         <source>Order of campaigns; a lower number wins.</source>
-        <target>Kolejność kampanii — mniejsza liczba ma pierwszeństwo.</target>
-      </trans-unit>
-      <trans-unit id="c9cc8cce247e49bae79f15173ce97354">
-        <source>Save</source>
-        <target>Zapisz</target>
+        <target>Kolejność kampanii – mniejsza liczba ma pierwszeństwo.</target>
       </trans-unit>
     </body>
   </file>

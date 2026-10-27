@@ -2,7 +2,7 @@
 <module>
 	<name>m4p_advancedpopup</name>
 	<displayName><![CDATA[Kampanie popup]]></displayName>
-	<version><![CDATA[1.0.0]]></version>
+	<version><![CDATA[1.1.0]]></version>
 	<description><![CDATA[Prowadzi kampanie popup w sklepie: własny HTML z przyciskiem, pokazywany po zadanym czasie, raz na sesję.]]></description>
 	<author><![CDATA[Modules4Presta]]></author>
 	<tab><![CDATA[advertising_marketing]]></tab>

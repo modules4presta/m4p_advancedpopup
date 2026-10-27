@@ -6,95 +6,79 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  */
 
+.m4p-popup-open {
+    overflow: hidden;
+}
 .m4p-popup {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 100000;
-}
-.m4p-popup.m4p-popup--open {
-    display: block;
-}
-.m4p-popup__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, .55);
-}
-.m4p-popup__dialog {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 94%;
-    max-width: 900px;
-    max-height: 90vh;
-    overflow: auto;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
+    width: min(640px, 100% - 32px);
+    max-height: calc(100dvh - 32px);
     padding: 28px 26px;
+    overflow: auto;
+    border: 0;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
+}
+.m4p-popup:focus {
+    outline: none;
+}
+.m4p-popup::backdrop {
+    background: rgba(0, 0, 0, .55);
 }
 .m4p-popup__close {
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 2;
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
     border: 0;
     border-radius: 50%;
-    background: rgba(255, 255, 255, .9);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
-    font-size: 24px;
-    line-height: 32px;
-    text-align: center;
+    background: transparent;
+    font-size: 28px;
+    line-height: 1;
+    color: #333;
     cursor: pointer;
-    color: #16284f;
 }
-/* Image-only popup — the image fills the dialog edge-to-edge. Detected
-   structurally (the image IS the entire popup content, optionally wrapped in a
-   single <p> or <a> the way the BO's WYSIWYG editor tends to wrap it) instead of
-   requiring an admin to hand-type the .m4p-popup__bleed class in the rich-text
-   HTML — that class silently vanished (and left the dialog's padding as a white
-   border around the image) whenever an image was swapped via the editor, since
-   re-inserting an image there doesn't preserve custom classes. The explicit class
-   is still honoured for any existing popup content that already has it. */
+.m4p-popup__close:hover,
+.m4p-popup__close:focus-visible {
+    background: #f2f2f2;
+}
+.m4p-popup__title {
+    margin: 0 40px 14px 0;
+    font-size: 24px;
+    line-height: 1.25;
+}
+.m4p-popup__content img {
+    max-width: 100%;
+    height: auto;
+}
+.m4p-popup__content > :last-child {
+    margin-bottom: 0;
+}
+.m4p-popup__cta {
+    display: inline-block;
+    margin-top: 18px;
+}
+
+/* A banner campaign is a single image, which the back-office editor usually wraps in a paragraph or
+   a link. Detected structurally, because a class typed into the editor is lost when the image is
+   replaced; .m4p-popup__bleed is still honoured. */
 .m4p-popup__content > img:only-child,
 .m4p-popup__content > p:only-child > img:only-child,
 .m4p-popup__content > a:only-child > img:only-child,
 .m4p-popup__content img.m4p-popup__bleed {
     display: block;
     width: calc(100% + 52px);
-    margin: -28px -26px;
     max-width: none;
+    margin: -28px -26px;
     border-radius: 10px;
 }
-/* Fix for white bar below banner when the image is wrapped in a paragraph/link */
 .m4p-popup__content > p:only-child:has(> img:only-child),
 .m4p-popup__content > a:only-child:has(> img:only-child),
 .m4p-popup__content p:has(img.m4p-popup__bleed),
 .m4p-popup__content a:has(img.m4p-popup__bleed) {
+    display: block;
     margin: 0;
     padding: 0;
     line-height: 0;
-    display: block;
-}
-.m4p-popup__title {
-    margin: 0 0 12px;
-    font-size: 22px;
-}
-.m4p-popup__content {
-    font-size: 15px;
-    line-height: 1.5;
-}
-.m4p-popup__content img {
-    max-width: 100%;
-    height: auto;
-}
-.m4p-popup__cta {
-    display: inline-block;
-    margin-top: 18px;
-}
-body.m4p-popup-open {
-    overflow: hidden;
 }
